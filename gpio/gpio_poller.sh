@@ -22,6 +22,7 @@ do
 
   while [ -z $chip_id ]; do
     echo "CH341 chip not present"
+    mosquitto_pub -h mosquitto -t alarm/ch341/status -m "0"
     sleep 5
     chip_id=`gpiodetect | grep ch341 | sed 's@^[^0-9]*\([0-9]\+\).*@\1@'`
   done
@@ -44,6 +45,7 @@ do
   if [ $counter -gt 20 ]; then
     #echo "Resetting counter!!"
     counter="0"
+    mosquitto_pub -h mosquitto -t alarm/ch341/status -m "1"
   fi
 
   sleep $DELAY
