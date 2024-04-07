@@ -22,7 +22,7 @@ services:
       - mosquitto
     privileged: true
   hassio:
-    image: homeassistant/amd64-hassio-supervisor
+    image: ghcr.io/home-assistant/amd64-hassio-supervisor
     container_name: hassio_supervisor
     restart: always
     privileged: true
