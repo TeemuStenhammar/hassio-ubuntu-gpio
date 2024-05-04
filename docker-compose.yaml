@@ -41,3 +41,29 @@ services:
       - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
     depends_on:
       - mosquitto
+  ftpd_server:
+    image: stilliard/pure-ftpd
+    container_name: pure-ftpd
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    volumes:
+      - ./ftp/data:/home/camera/
+      - ./ftp/passwd:/etc/pure-ftpd/passwd
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: ${FTP_USERNAME}
+      FTP_USER_PASS: ${FTP_PASSWORD}
+      FTP_USER_HOME: /home/camera
+    restart: always
+  dropbox:
+    image: rbonghi/dropbox:latest
+    container_name: dropbox
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DROPBOX_APP_KEY=${DROPBOX_APP_KEY}
+      - DROPBOX_APP_SECRET=${DROPBOX_APP_SECRET}
+      - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
+    volumes:
+      - ./ftp/data:/dropbox
+    restart: always
