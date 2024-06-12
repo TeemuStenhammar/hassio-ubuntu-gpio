@@ -55,15 +55,5 @@ services:
       FTP_USER_NAME: ${FTP_USERNAME}
       FTP_USER_PASS: ${FTP_PASSWORD}
       FTP_USER_HOME: /home/camera
-    restart: always
-  dropbox:
-    image: rbonghi/dropbox:latest
-    container_name: dropbox
-    environment:
-      - PYTHONUNBUFFERED=1
-      - DROPBOX_APP_KEY=${DROPBOX_APP_KEY}
-      - DROPBOX_APP_SECRET=${DROPBOX_APP_SECRET}
-      - DROPBOX_REFRESH_TOKEN=${DROPBOX_REFRESH_TOKEN}
-    volumes:
-      - ./ftp/data:/dropbox
+      ADDED_FLAGS: "-d -d -O w3c:/var/log/pure-ftpd/transfer.log"
     restart: always
